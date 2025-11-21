@@ -1,91 +1,636 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Payout de Gitz</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=MedievalSharp&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <div class="container">
-        <header>
-            <h1>💰 Payout de Gitz</h1>
-            <p class="subtitle">Gérez les dépenses et revenus de votre groupe</p>
-        </header>
+  <head>
+    <!-- Créé par Sambo -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Muten Club — GTA RP</title>
+    <meta name="description" content="Muten Club — La vitesse, l'honneur, le style. Gang japonais de passionnés d'automobile." />
+    <link rel="icon" type="image/png" href="logo.png" />
 
-        <div class="main-content">
-            <!-- Section Participants -->
-            <section class="card">
-                <h2>👥 Participants</h2>
-                <div class="input-group">
-                    <input type="text" id="participantName" placeholder="Nom du participant">
-                    <button onclick="addParticipant()" class="btn btn-primary">Ajouter</button>
-                </div>
-                <div id="participantsList" class="list"></div>
-            </section>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Staatliches&display=swap" rel="stylesheet" />
 
-            <!-- Section Dépenses -->
-            <section class="card">
-                <h2>🗺️ Dépenses (Cartes au Trésor)</h2>
-                <div class="input-group">
-                    <select id="expenseParticipant" class="select-input">
-                        <option value="">Sélectionner un participant</option>
-                    </select>
-                    <input type="number" id="expenseAmount" placeholder="Coût de la carte au trésor" step="0.01" min="0">
-                    <button onclick="addExpense()" class="btn btn-danger">Ajouter Dépense</button>
-                </div>
-                <div id="expensesList" class="list"></div>
-                <div class="total">
-                    <strong>Total dépenses: <span id="totalExpenses">0</span></strong>
-                </div>
-            </section>
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css" />
 
-            <!-- Section Revenus -->
-            <section class="card">
-                <h2>🎒 Revenus (Sacs d'argent)</h2>
-                <div class="input-group">
-                    <select id="incomeParticipant" class="select-input">
-                        <option value="">Sélectionner un participant</option>
-                    </select>
-                    <input type="number" id="incomeAmount" placeholder="Montant du sac" step="0.01" min="0">
-                    <button onclick="addIncome()" class="btn btn-success">Ajouter Revenu</button>
-                </div>
-                <div id="incomesList" class="list"></div>
-                <div class="total">
-                    <strong>Total revenus: <span id="totalIncomes">0</span></strong>
-                </div>
-            </section>
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
 
-            <!-- Section Valeur Générale du Donjon -->
-            <section class="card">
-                <h2>🏰 Valeur Générale du PayOut</h2>
-                <div class="input-group">
-                    <input type="number" id="dungeonValue" placeholder="Valeur totale du PayOut" step="0.01" min="0">
-                    <button onclick="setDungeonValue()" class="btn btn-primary">Définir la Valeur</button>
-                </div>
-                <div id="dungeonValueDisplay" class="total">
-                    <strong>Valeur du PayOut: <span id="dungeonValueAmount">0</span></strong>
-                    <div style="margin-top: 10px; font-size: 0.9em; color: #666;">
-                        Part par participant: <span id="dungeonSharePerPerson">0</span>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Section Résultats -->
-            <section class="card results-card">
-                <h2>📊 Calcul Final</h2>
-                <div id="results" class="results">
-                    <p class="info-message">Ajoutez des participants, dépenses et revenus pour voir le calcul</p>
-                </div>
-                <button onclick="calculatePayouts()" class="btn btn-primary btn-large">Calculer les Payouts</button>
-            </section>
+    <!-- App JS -->
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <!-- Créé par Sambo | Écran de chargement -->
+    <div id="loader" class="loader">
+      <div class="loader-content">
+        <div class="loader-logo-wrap">
+          <img class="loader-logo-img" src="logo.png" alt="Logo Muten Club" loading="lazy" decoding="async">
         </div>
+        <div class="road">
+          <div class="road-lines"></div>
+        </div>
+        <div class="loader-text-top">
+          <span class="loader-big-title">MUTEN CLUB</span>
+        </div>
+        <div class="loader-text-bottom">
+          <span class="loader-logo">ムテン・クラブ</span>
+          <span class="loader-subtitle">Chargement...</span>
+        </div>
+      </div>
     </div>
 
-    <script src="script.js"></script>
-</body>
-</html>
+    <!-- Créé par Sambo | Navigation fixe -->
+    <header class="nav">
+      <a href="#home" class="brand">Muten Club</a>
+      <nav class="nav-links">
+        <a href="#home" class="nav-link">Accueil</a>
+        <a href="#personnages" class="nav-link">Personnages</a>
+        <a href="#histoire" class="nav-link">Histoire</a>
+        <a href="#objectifs" class="nav-link">Objectifs</a>
+        <a href="#courses" class="nav-link">Courses</a>
+        <a href="#activites" class="nav-link">Activités principales</a>
+        <a href="#vehicules" class="nav-link">Véhicules</a>
+        <a href="#grades" class="nav-link">Grades</a>
+        <a href="#territoire" class="nav-link">Territoire</a>
+        <a href="#classement" class="nav-link">Classement</a>
+      </nav>
+      <div class="audio-controls">
+        <button class="audio-toggle" aria-label="Activer/Désactiver le son" title="Son">
+          <!-- Icône haut-parleur -->
+          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M3 9v6h4l5 4V5L7 9H3zm13.5 3a4.5 4.5 0 0 0-2.5-4.03v8.06A4.5 4.5 0 0 0 16.5 12zm0-7.5a7.5 7.5 0 0 1 0 15v-2a5.5 5.5 0 0 0 0-11v-2z"/></svg>
+        </button>
+        <div class="volume-control">
+          <input type="range" id="volume-slider" min="0" max="100" value="50" aria-label="Volume" title="Volume">
+        </div>
+      </div>
+    </header>
+
+    <!-- Créé par Sambo | Arrière-plan dynamique (parallaxe) -->
+    <div class="parallax">
+      <div class="parallax-layer layer-back"></div>
+      <div class="parallax-layer layer-mid"></div>
+      <div class="parallax-layer layer-front"></div>
+      <div class="scanline"></div>
+    </div>
+
+    <!-- Créé par Sambo | Overlay textes japonais néon -->
+    <div class="japanese-neon-overlay">
+      <div class="japanese-text">無天・クラブ</div>
+      <div class="japanese-text">速度</div>
+      <div class="japanese-text">名誉</div>
+      <div class="japanese-text">スタイル</div>
+      <div class="japanese-text">ムテン</div>
+      <div class="japanese-text">走る</div>
+      <div class="japanese-text">自由</div>
+      <div class="japanese-text">闘う</div>
+      <div class="japanese-text">誇り</div>
+    </div>
+
+    <!-- Créé par Sambo | HERO / Accueil -->
+    <main id="home" class="section hero" aria-labelledby="hero-title">
+      <video class="hero-video" autoplay muted loop playsinline preload="metadata" poster="logo.png">
+        <source src="https://r2.fivemanage.com/y2dlGGSBMfhrmbenwWl8k/clip.mp4" type="video/mp4">
+      </video>
+      <div class="hero-overlay"></div>
+      <div class="hero-inner">
+        <div class="logo-wrap">
+          <div class="logo-glow"></div>
+          <img class="logo" src="logo.png" alt="Logo Muten Club" loading="lazy" decoding="async" />
+        </div>
+        <h1 id="hero-title" class="title">
+          <span class="jp">ムテン・クラブ</span>
+          <span class="en">Muten Club</span>
+        </h1>
+        <p class="subtitle">La vitesse, l'honneur, le style.</p>
+        <button class="btn-enter" data-scroll-to="#personnages">Entrer</button>
+      </div>
+    </main>
+
+    <!-- Créé par Sambo | Personnages -->
+    <section id="personnages" class="section characters" aria-labelledby="characters-title">
+      <div class="section-header">
+        <h2 id="characters-title" class="section-title" title="Clique sur un personnage pour ouvrir sa fiche">Personnages <span style="font-size:0.7em; opacity:0.65; font-weight:normal; margin-left:0.5rem;">(clique sur les personnages)</span></h2>
+        <div class="section-icons">
+          <!-- volant -->
+          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 1 0 10 10A10.011 10.011 0 0 0 12 2Zm0 2a8 8 0 0 1 7.75 6H13a1 1 0 0 0-1-1h0a1 1 0 0 0-1 1H4.25A8 8 0 0 1 12 4Zm0 16a8 8 0 0 1-7.06-4h6.06a1 1 0 0 0 1 1h0a1 1 0 0 0 1-1h6.06A8 8 0 0 1 12 20Zm5.66-6H6.34a6 6 0 0 1 11.32 0Z"/></svg>
+          <!-- clé -->
+          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M7 14a5 5 0 1 1 4.9-6.06L22 2v4l-3 2v2h-2l-2 2h-2l-1 1A5 5 0 0 1 7 14Zm-2-5a2 2 0 1 0 2-2 2 2 0 0 0-2 2Z"/></svg>
+          <!-- katana -->
+          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M21.71 4.29a1 1 0 0 0-1.42 0L12 12.59 8.71 9.29l-1.42 1.42L10.59 14 3.29 21.29a1 1 0 0 0 1.42 1.42L12 15.41l3.29 3.3 1.42-1.42L13.41 14l7.3-7.29a1 1 0 0 0 0-1.42Z"/></svg>
+        </div>
+      </div>
+
+      <div class="carousel">
+        <button class="carousel-btn prev" aria-label="Précédent">⟨</button>
+        <div class="carousel-viewport">
+          <ul class="carousel-track">
+            <!-- Cartes personnages -->
+            <li class="card" data-audio="engine" data-character="pulsar" style="cursor:pointer;">
+              <div class="card-bg" style="background-image:url('pulsar.png');"></div>
+              <div class="card-glass"></div>
+              <div class="card-content">
+                <h3 class="name">Pulsar</h3>
+                <p class="role">Tenshi "Bosu" Musashi</p>
+                <p class="grade">Kaichō (会長)</p>
+                <p class="desc">Leader du clan, l'âme du Muten Club.</p>
+              </div>
+            </li>
+            <li class="card" data-audio="engine" data-character="sambo" style="cursor:pointer;">
+              <div class="card-bg" style="background-image:url('sambo.png');"></div>
+              <div class="card-glass"></div>
+              <div class="card-content">
+                <h3 class="name">Sambo</h3>
+                <p class="role">Ken "Draken" Genryusai</p>
+                <p class="grade">Kyōryokuteki (強有力的)</p>
+                <p class="desc">Lieutenant du clan, proxénète, pilier de la fraternité.</p>
+              </div>
+            </li>
+            <li class="card" data-audio="engine" data-character="replayy" style="cursor:pointer;">
+              <div class="card-bg" style="background-image:url('replay.png');"></div>
+              <div class="card-glass"></div>
+              <div class="card-content">
+                <h3 class="name">Replayy</h3>
+                <p class="role">KURO "Kaze" Genryusai</p>
+                <p class="grade">Kyōryokuteki (強有力的)</p>
+                <p class="desc">Lieutenant du clan, force redoutable.</p>
+              </div>
+            </li>
+            <li class="card" data-audio="engine" data-character="tako" style="cursor:pointer;">
+              <div class="card-bg" style="background-image:url('tako.png');"></div>
+              <div class="card-glass"></div>
+              <div class="card-content">
+                <h3 class="name">Tako</h3>
+                <p class="role">Ryo "Raijin" Takahashi</p>
+                <p class="grade">Kyōryokuteki (強有力的)</p>
+                <p class="desc">Lieutenant du clan, foudre sur la route.</p>
+              </div>
+            </li>
+            <li class="card" data-audio="engine" data-character="alpha" style="cursor:pointer;">
+              <div class="card-bg" style="background-image:url('alpha.png');"></div>
+              <div class="card-glass"></div>
+              <div class="card-content">
+                <h3 class="name">Alpha</h3>
+                <p class="role">Akira "Mad Dog" Fujimoto</p>
+                <p class="grade">Kōhai (後輩)</p>
+                <p class="desc">Mécano du clan, maître des moteurs.</p>
+              </div>
+            </li>
+            <li class="card" data-audio="engine" data-character="angel" style="cursor:pointer;">
+              <div class="card-bg" style="background-image:url('angel.png');"></div>
+              <div class="card-glass"></div>
+              <div class="card-content">
+                <h3 class="name">Angel</h3>
+                <p class="role">Renji "Hayabusa" Nomura</p>
+                <p class="grade">Shatei (舎弟)</p>
+                <p class="desc">Membre du clan, faucon de la nuit.</p>
+              </div>
+            </li>
+            <li class="card" data-audio="engine" data-character="bozo" style="cursor:pointer;">
+              <div class="card-bg" style="background-image:url('bozo.png');"></div>
+              <div class="card-glass"></div>
+              <div class="card-content">
+                <h3 class="name">Bozo</h3>
+                <p class="role">Tosoa "Bozo" Mura</p>
+                <p class="grade">Shatei (舎弟)</p>
+                <p class="desc">Membre du clan, rappeur, esprit libre.</p>
+              </div>
+            </li>
+            <li class="card" data-audio="engine" data-character="gamxo" style="cursor:pointer;">
+              <div class="card-bg" style="background-image:url('gamxo.png');"></div>
+              <div class="card-glass"></div>
+              <div class="card-content">
+                <h3 class="name">Gamxo</h3>
+                <p class="role">Akihiko "Kurai" Mori</p>
+                <p class="grade">Shatei (舎弟)</p>
+                <p class="desc">Membre du clan, ombre dans la nuit.</p>
+              </div>
+            </li>
+            <li class="card" data-audio="engine" data-character="lums" style="cursor:pointer;">
+              <div class="card-bg" style="background-image:url('lums.png');"></div>
+              <div class="card-glass"></div>
+              <div class="card-content">
+                <h3 class="name">Lums</h3>
+                <p class="role">Kaito "Korō" Matsuda</p>
+                <p class="grade">Shatei (舎弟)</p>
+                <p class="desc">Membre du clan, cœur de glace.</p>
+              </div>
+            </li>
+            <li class="card" data-audio="engine" data-character="patoche" style="cursor:pointer;">
+              <div class="card-bg" style="background-image:url('patoche.png');"></div>
+              <div class="card-glass"></div>
+              <div class="card-content">
+                <h3 class="name">Patoche</h3>
+                <p class="role">Shinichiro "SHIN" Kanzaki</p>
+                <p class="grade">Shatei (舎弟)</p>
+                <p class="desc">Membre du clan, nouvelle génération.</p>
+              </div>
+            </li>
+            <li class="card" data-audio="engine" data-character="burger" style="cursor:pointer;">
+              <div class="card-bg" style="background-image:url('burger.png');"></div>
+              <div class="card-glass"></div>
+              <div class="card-content">
+                <h3 class="name">Burger</h3>
+                <p class="role">Takashi "Taka" Kanzaki</p>
+                <p class="grade">Shatei (舎弟)</p>
+                <p class="desc">Membre du clan, fidèle compagnon.</p>
+              </div>
+            </li>
+            <li class="card" data-audio="engine" data-character="imenvyy" style="cursor:pointer;">
+              <div class="card-bg" style="background-image:url('envy.png');"></div>
+              <div class="card-glass"></div>
+              <div class="card-content">
+                <h3 class="name">Envy</h3>
+                <p class="role">Takeshi "Yoru" Matsudo</p>
+                <p class="grade">Shatei (舎弟)</p>
+                <p class="desc">Lame silencieuse du Muten, discret mais implacable.</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <button class="carousel-btn next" aria-label="Suivant">⟩</button>
+      </div>
+
+      <audio id="sfx-engine" preload="none" src="https://cdn.pixabay.com/download/audio/2021/08/04/audio_1f51c0d9e8.mp3?filename=engine-6105.mp3"></audio>
+    </section>
+
+    
+
+    <!-- Créé par Sambo | Musique de fond -->
+    <audio id="bg-music" preload="auto" loop autoplay playsinline muted src="muten.mp3"></audio>
+
+    <!-- Créé par Sambo | Modal Histoire Personnage -->
+    <div id="character-modal" class="character-modal">
+      <div class="modal-overlay"></div>
+      <div class="modal-content">
+        <button class="modal-close" aria-label="Fermer">&times;</button>
+        <div class="modal-header">
+          <h2 class="modal-name"></h2>
+          <p class="modal-role"></p>
+          <p class="modal-grade"></p>
+        </div>
+        <div class="modal-body">
+          <div class="modal-image"></div>
+          <div class="modal-stats" aria-label="Statistiques du personnage"></div>
+          <div class="modal-story"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Créé par Sambo | Histoire -->
+    <section id="histoire" class="section history" aria-labelledby="history-title">
+      <h2 id="history-title" class="section-title">
+        <span class="jp">歴史</span>
+        <span class="en">Histoire</span>
+      </h2>
+      <div class="history-content">
+        <div class="history-block">
+          <p>Le Muten Club est né dans les rues de Yokohama en 2020, fondé par une bande de jeunes en colère et passionnés de moteurs. Ils passaient leurs nuits à bricoler des motos et des voitures volées ou sauvées de la casse, à transformer la vitesse en langage, la fumée en drapeau et la route en temple.</p>
+          
+          <p>Au centre de ce chaos régnait <strong>Tenshi Musashi</strong>, un gamin calme au regard brûlant, fils d'un mécanicien mort dans une course illégale. Il n'a jamais cherché à être chef, mais tout le monde l'a suivi. On l'a appelé <strong>Bōsu</strong>, le patron.</p>
+          
+          <p>Sous sa direction, le Muten Club — <strong>無天</strong>, "sans ciel" — est devenu plus qu'un gang : une fraternité de la nuit. Leur emblème, une tête de tengu rouge entourée de flammes, symbolise leur orgueil et leur mépris du danger. Leur devise, <strong>「走るは自由、闘うは誇り。」</strong> — Courir, c'est la liberté. Se battre, c'est l'honneur.</p>
+          
+          <p>Le Muten règne sur les routes de Tokyo, Hakone et des montagnes d'Ibaraki, provoquant la police, défiant les yakuzas et écrasant les crews rivaux comme les Kurokaze, les Red Comet ou les Tora Gumi. Sous la lune, ils rugissent, libres et indomptables.</p>
+          
+          <p><strong>Tenshi Musashi</strong> est leur âme. On raconte qu'il pilote sa Hayabusa rouge les yeux fermés, guidé seulement par le son du moteur, comme s'il parlait à la route. Pour lui, la vitesse n'est pas une fuite, c'est une vérité : <em>"La route ne ment jamais. Elle t'offre la vérité que le monde te refuse."</em></p>
+          
+          <p>Une nuit d'hiver, lors d'une course-poursuite mythique sur le périphérique de Tokyo, le Bōsu aurait sauté un pont inachevé sous la pluie, atterrissant de l'autre côté indemne. Depuis, la rumeur dit qu'il a vendu son âme à la route.</p>
+          
+          <p>Aujourd'hui encore, même si le Muten Club s'est dispersé, leur légende rôde dans les tunnels et les docks abandonnés. Les néons s'allument, les moteurs hurlent, et les nouveaux riders reprennent leur cri : <strong>"MUTEN FOREVER — THE SKY IS OURS."</strong></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Créé par Sambo | Objectifs -->
+    <section id="objectifs" class="section objectifs" aria-labelledby="objectifs-title">
+      <h2 id="objectifs-title" class="section-title">
+        <span class="jp">目標</span>
+        <span class="en">Objectifs à Los Santos</span>
+      </h2>
+      <div class="objectifs-grid">
+        <article class="objectif-card">
+          <div class="objectif-icon">
+            <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 1 0 10 10A10.011 10.011 0 0 0 12 2Zm1 15h-2v-2h2Zm0-4h-2V7h2Z"/></svg>
+          </div>
+          <h3 class="objectif-title">Implantation à Little Tokyo</h3>
+          <p class="objectif-text">Établir notre présence au cœur du quartier: planques, garage, contacts fiables.</p>
+        </article>
+        <article class="objectif-card">
+          <div class="objectif-icon">
+            <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path fill="currentColor" d="M12 12a5 5 0 1 0-5-5 5 5 0 0 0 5 5Zm0 2c-4 0-8 2-8 6v2h16v-2c0-4-4-6-8-6Z"/></svg>
+          </div>
+          <h3 class="objectif-title">Réseau & Alliances</h3>
+          <p class="objectif-text">Nouer des alliances utiles, corrompre ou intimider quand nécessaire.</p>
+        </article>
+        <article class="objectif-card">
+          <div class="objectif-icon">
+            <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path fill="currentColor" d="M3 13h2v-2H3v2Zm4 0h14v-2H7v2Z"/></svg>
+          </div>
+          <h3 class="objectif-title">Dominer la scène course</h3>
+          <p class="objectif-text">Organiser runs, drifts, poursuites. Imposer notre nom sur chaque asphalte.</p>
+        </article>
+        <article class="objectif-card">
+          <div class="objectif-icon">
+            <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path fill="currentColor" d="M12 1 3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5Zm0 20c-3.86-1.07-7-5.08-7-9.5V6.3l7-3.11 7 3.11v5.2C19 15.92 15.86 19.93 12 21Z"/></svg>
+          </div>
+          <h3 class="objectif-title">Argent propre / sale</h3>
+          <p class="objectif-text">Go Fast, braquages, racket. Blanchir via garages, ventes et événements.</p>
+        </article>
+        <article class="objectif-card">
+          <div class="objectif-icon">
+            <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path fill="currentColor" d="M12 7l-5 5h3v4h4v-4h3Z"/></svg>
+          </div>
+          <h3 class="objectif-title">Image & Style</h3>
+          <p class="objectif-text">Car meets, show & shine. Affirmation du style Muten: propreté et néons.</p>
+        </article>
+        <article class="objectif-card">
+          <div class="objectif-icon">
+            <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path fill="currentColor" d="M16 11V7a4 4 0 1 0-8 0v4H5v10h14V11Zm-6 0V7a2 2 0 1 1 4 0v4Z"/></svg>
+          </div>
+          <h3 class="objectif-title">Recrutement sélectif</h3>
+          <p class="objectif-text">Intégrer des profils rares: pilotes, mécanos, têtes brûlées loyales.</p>
+        </article>
+        <article class="objectif-card">
+          <div class="objectif-icon">
+            <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path fill="currentColor" d="M12 22c5.52 0 10-4.48 10-10S17.52 2 12 2 2 6.48 2 12s4.48 10 10 10Zm-1-6.5-3-3 1.41-1.41L11 12.67l4.59-4.59L17 9.5Z"/></svg>
+          </div>
+          <h3 class="objectif-title">Paix sociale dans le quartier</h3>
+          <p class="objectif-text">Protéger les commerces locaux, maintenir l'ordre à Little Tokyo et gagner le respect des habitants.</p>
+        </article>
+        <article class="objectif-card">
+          <div class="objectif-icon">
+            <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path fill="currentColor" d="M3 5h18v2H3zm3 6h12v2H6zm-3 6h18v2H3z"/></svg>
+          </div>
+          <h3 class="objectif-title">Couverture civile crédible</h3>
+          <p class="objectif-text">Construire une vie civile propre: jobs légaux, événements publics, intégration discrète dans la ville.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Créé par Sambo | Courses -->
+    <section id="courses" class="section courses" aria-labelledby="courses-title">
+      <h2 id="courses-title" class="section-title">
+        <span class="jp">レース</span>
+        <span class="en">Courses</span>
+      </h2>
+      <div class="courses-grid">
+        <article class="course-card">
+          <h3>"Kurumahon"</h3>
+          <p class="course-subtitle">(Pari de carte grise)</p>
+          <p>Un rituel underground où deux crews s'affrontent en course : le perdant remet la carte grise (titre du bolide) en gage — enjeu fort qui nourrit honneur, tensions et arcs dramatiques.</p>
+        </article>
+        <article class="course-card">
+          <h3>Courses à Pari – "Shin'en Run"</h3>
+          <p>Des pilotes s'affrontent sur des runs clandestins où de l'argent, des pièces rares sont mis en jeu.</p>
+          <p class="course-conclusion">Le vainqueur rafle la mise, le perdant perd plus que sa fierté.</p>
+        </article>
+        <article class="course-card">
+          <h3>Concours de Drift</h3>
+          <p class="course-subtitle">(Compétition de style)</p>
+          <p>Des compétitions où les pilotes s'affrontent dans des démonstrations de drift. L'art de la glisse, de la maîtrise et du style. Les meilleurs drifteurs du Muten Club se mesurent dans des épreuves techniques où la technique prime sur la vitesse pure.</p>
+        </article>
+        <article class="course-card">
+          <h3>Course Poursuite</h3>
+          <p class="course-subtitle">(Fuite ou défaite)</p>
+          <p>Des courses-poursuites intenses où l'objectif est simple : fuir ou être rattrapé. Ceux qui arrivent à fuir gagnent, ceux qui perdent... perdent tout. Une épreuve de survie sur les routes de Los Santos où chaque seconde compte.</p>
+        </article>
+        <article class="course-card">
+          <h3>Go Fast</h3>
+          <p class="course-subtitle">(Vitesse pure)</p>
+          <p>Des courses de vitesse pure où la seule règle est d'aller le plus vite possible. Des défis lancés sur les autoroutes et les routes droites, où les pilotes poussent leurs machines à la limite. La vitesse, rien que la vitesse.</p>
+        </article>
+        <article class="course-card">
+          <h3>Car Meet</h3>
+          <p class="course-subtitle">(Rassemblement automobile)</p>
+          <p>Des rassemblements où les membres du Muten Club se retrouvent pour exposer leurs bolides, échanger des techniques et partager leur passion. L'occasion de montrer son style, ses modifications et de rencontrer d'autres passionnés de la route.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Créé par Sambo | Activités -->
+    <section id="activites" class="section activites" aria-labelledby="activites-title">
+      <h2 id="activites-title" class="section-title">Activités principales</h2>
+      <div class="activites-content">
+        <div class="activites-block">
+          <p>Les activités principales du groupe seront forcément les courses et tout type d'affaires qui concerne l'automobile.</p>
+          <p>Mais pour parvenir à nos fins et pouvoir rester le plus possible autour de l'automobile, nous avons donc besoin d'une source de revenu stable et conséquente, c'est pourquoi nous nous dirigerons vers la <strong>cocaïne</strong>, son transport et sa revente, ainsi que d'autres activités lucratives comme les <strong>braquages</strong>, le <strong>racket</strong> et les <strong>brawls</strong>.</p>
+          
+          <!-- Graphique de répartition -->
+          <div class="activites-chart">
+            <h4>Répartition des activités</h4>
+            <div class="chart-container">
+              <div class="chart-bar">
+                <div class="chart-label">Courses</div>
+                <div class="chart-track">
+                  <div class="chart-fill chart-courses" style="width: 45%">
+                    <span class="chart-value">45%</span>
+                  </div>
+                </div>
+              </div>
+              <div class="chart-bar">
+                <div class="chart-label">Cocaïne</div>
+                <div class="chart-track">
+                  <div class="chart-fill chart-cocaine" style="width: 20%">
+                    <span class="chart-value">20%</span>
+                  </div>
+                </div>
+              </div>
+              <div class="chart-bar">
+                <div class="chart-label">Braquage</div>
+                <div class="chart-track">
+                  <div class="chart-fill chart-braquage" style="width: 15%">
+                    <span class="chart-value">15%</span>
+                  </div>
+                </div>
+              </div>
+              <div class="chart-bar">
+                <div class="chart-label">Racket</div>
+                <div class="chart-track">
+                  <div class="chart-fill chart-racket" style="width: 12%">
+                    <span class="chart-value">12%</span>
+                  </div>
+                </div>
+              </div>
+              <div class="chart-bar">
+                <div class="chart-label">Brawl</div>
+                <div class="chart-track">
+                  <div class="chart-fill chart-brawl" style="width: 8%">
+                    <span class="chart-value">8%</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Créé par Sambo | Véhicules -->
+    <section id="vehicules" class="section vehicules" aria-labelledby="vehicules-title">
+      <h2 id="vehicules-title" class="section-title">Exemple de véhicules</h2>
+      <div class="vehicules-grid">
+        <article class="vehicule-card">
+          <div class="vehicule-image">
+            <img src="https://files.catbox.moe/h3cftm.png" alt="ZR350" loading="lazy" decoding="async" />
+          </div>
+          <h3 class="vehicule-name">ZR350</h3>
+          <p class="vehicule-desc">Véhicule purement japonais, parmi les symboles de la culture JDM actuel.</p>
+        </article>
+        <article class="vehicule-card">
+          <div class="vehicule-image">
+            <img src="dinka.png" alt="RT3000" loading="lazy" decoding="async" />
+          </div>
+          <h3 class="vehicule-name">RT3000</h3>
+          <p class="vehicule-desc">Véhicule connu pour sa simplicité et étant une compacte rapide restant dans le style JDM actuel</p>
+        </article>
+        <article class="vehicule-card">
+          <div class="vehicule-image">
+            <img src="https://files.catbox.moe/6hqrkk.png" alt="Penumbra FF" loading="lazy" decoding="async" />
+          </div>
+          <h3 class="vehicule-name">Penumbra FF</h3>
+          <p class="vehicule-desc">Véhicule reconnu dans les années 2000 comme un des piliers de la culture JDM qui est maintenant gravé dans l'histoire.</p>
+        </article>
+        <article class="vehicule-card">
+          <div class="vehicule-image">
+            <img src="https://files.catbox.moe/x2fkoa.png" alt="Dinka Jester" loading="lazy" decoding="async" />
+          </div>
+          <h3 class="vehicule-name">Dinka Jester</h3>
+          <p class="vehicule-desc">Coupé sportif emblématique inspiré des GT japonaises, agile et affûté pour les runs nocturnes.</p>
+        </article>
+        <article class="vehicule-card">
+          <div class="vehicule-image">
+            <img src="https://files.catbox.moe/6lbytg.png" alt="Annis Elegy Retro Custom" loading="lazy" decoding="async" />
+          </div>
+          <h3 class="vehicule-name">Annis Elegy Retro Custom</h3>
+          <p class="vehicule-desc">Icône JDM, transmission affûtée et potentiel de préparation énorme — reine des montées d’adrénaline.</p>
+        </article>
+        <article class="vehicule-card">
+          <div class="vehicule-image">
+            <img src="sultanrs.png" alt="Karin Sultan RS" loading="lazy" decoding="async" />
+          </div>
+          <h3 class="vehicule-name">Karin Sultan RS</h3>
+          <p class="vehicule-desc">Berline devenue bête de course, polyvalente et féroce, parfaite pour le street et le rally.</p>
+        </article>
+        <article class="vehicule-card">
+          <div class="vehicule-image">
+            <img src="futo.png" alt="Karin Futo" loading="lazy" decoding="async" />
+          </div>
+          <h3 class="vehicule-name">Karin Futo</h3>
+          <p class="vehicule-desc">Classique du drift inspiré des années 80, légère, nerveuse et idéale pour la glisse.</p>
+        </article>
+        <article class="vehicule-card">
+          <div class="vehicule-image">
+            <img src="kanjo.png" alt="Dinka Blista Kanjo" loading="lazy" decoding="async" />
+          </div>
+          <h3 class="vehicule-name">Dinka Blista Kanjo</h3>
+          <p class="vehicule-desc">Compacte JDM turbulente, parfaite pour le street racing urbain et les préparations sauvages.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Créé par Sambo | Grades -->
+    <section id="grades" class="section grades" aria-labelledby="grades-title">
+      <h2 id="grades-title" class="section-title">Grades</h2>
+      <div class="grades-content">
+        <div class="grades-table-wrapper">
+          <table class="grades-table">
+            <thead>
+              <tr>
+                <th>Grade</th>
+                <th>Rôle</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="grade-name">Kaichō <span class="grade-jp">(会長)</span></td>
+                <td>Leader du clan</td>
+              </tr>
+              <tr>
+                <td class="grade-name">Fuku-kaichō <span class="grade-jp">(副会長)</span></td>
+                <td>Second du clan</td>
+              </tr>
+              <tr>
+                <td class="grade-name">Kyōryokuteki <span class="grade-jp">(強有力的)</span></td>
+                <td>Lieutenant du clan</td>
+              </tr>
+              <tr>
+                <td class="grade-name">Kōhai <span class="grade-jp">(後輩)</span></td>
+                <td>Mécano du clan</td>
+              </tr>
+              <tr>
+                <td class="grade-name">Tokusha <span class="grade-jp">(特車)</span></td>
+                <td>Pilote référence du clan</td>
+              </tr>
+              <tr>
+                <td class="grade-name">Seinen <span class="grade-jp">(青年)</span></td>
+                <td>Recrue & membre du clan</td>
+              </tr>
+              <tr>
+                <td class="grade-name">Shatei <span class="grade-jp">(舎弟)</span></td>
+                <td>Recrue & membre du clan</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Créé par Sambo | Territoire -->
+    <section id="territoire" class="section territoire" aria-labelledby="territoire-title">
+      <h2 id="territoire-title" class="section-title">Territoire</h2>
+      <div class="territoire-content">
+        <article class="territoire-card">
+          <div class="territoire-image">
+            <img src="tokyo.png" alt="Little Tokyo" loading="lazy" decoding="async" />
+          </div>
+          <div class="territoire-info">
+            <h3 class="territoire-name">Little Tokyo</h3>
+            <p class="territoire-stats">Nombre d'habitants : <strong>12,000</strong></p>
+            <p>Little Tokyo, anciennement appelé Little Séoul, est la plaque tournante asiatique de Los Santos. Chaque asiatique ayant immigré est forcément passé par ici. Anciennement contrôlé par le peuple coréen, dorénavant une immigration massive de japonais a repris le contrôle.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Créé par Sambo | Classement pilotes -->
+    <section id="classement" class="section classement" aria-labelledby="classement-title">
+      <h2 id="classement-title" class="section-title">
+        <span class="jp">ランキング</span>
+        <span class="en">Classement des meilleurs pilotes</span>
+      </h2>
+      <div class="classement-content">
+        <ol class="classement-list" aria-label="Top 12 des pilotes">
+          <li><span class="rank">1</span><span class="driver">Replayy</span></li>
+          <li><span class="rank">2</span><span class="driver">Lums</span></li>
+          <li><span class="rank">3</span><span class="driver">Gamxo</span></li>
+          <li><span class="rank">4</span><span class="driver">Tako</span></li>
+          <li><span class="rank">5</span><span class="driver">Sambo</span></li>
+          <li><span class="rank">6</span><span class="driver">Envy</span></li>
+          <li><span class="rank">7</span><span class="driver">Angel</span></li>
+          <li><span class="rank">8</span><span class="driver">Pulsar</span></li>
+          <li><span class="rank">9</span><span class="driver">Patoche</span></li>
+          <li><span class="rank">10</span><span class="driver">Alpha</span></li>
+          <li><span class="rank">11</span><span class="driver">Burger</span></li>
+          <li><span class="rank">12</span><span class="driver">Bozo</span></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- Créé par Sambo | Footer -->
+    <footer class="footer">
+      <p class="small">Site créé par Sambo</p>
+    </footer>
+
+    <!-- Badge rotatif Nitro Addict | BOZO -->
+    <div class="nitro-badge" aria-label="Nitro Addict | BOZO">
+      <div class="nitro-inner">
+        <span class="nitro-text">Nitro Addict | BOZO</span>
+      </div>
+    </div>
+  </body>
+  </html>
 
