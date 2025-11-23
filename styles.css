@@ -576,14 +576,6 @@ body{
   border-color: rgba(160,80,220,.26);
   box-shadow: 0 20px 60px rgba(120,0,200,.2), 0 0 0 1px rgba(180,120,240,.12) inset;
 }
-.character-modal[data-character="lums"] .modal-content{
-  background:
-    radial-gradient(120% 80% at 50% -10%, rgba(0,255,255,.20), transparent 60%),
-    radial-gradient(100% 60% at 0% 100%, rgba(0,180,220,.14), transparent 60%),
-    linear-gradient(180deg, rgba(0,10,12,.96), rgba(0,16,18,.98));
-  border-color: rgba(120,240,255,.26);
-  box-shadow: 0 20px 60px rgba(0,220,240,.2), 0 0 0 1px rgba(120,240,255,.12) inset;
-}
 .character-modal[data-character="patoche"] .modal-content{
   background:
     radial-gradient(120% 80% at 50% -10%, rgba(0,255,160,.20), transparent 60%),

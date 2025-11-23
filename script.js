@@ -511,20 +511,6 @@ window.addEventListener('load', ()=>{
       <p>Sa technique de pilotage est aussi silencieuse que son nom. Il peut suivre n'importe qui sans être détecté, disparaître dans un instant. Il est l'ombre dans la nuit, celle qui veille.</p>
       <p>Kurai est celui qui sait tout, voit tout, mais ne dit rien. Sa loyauté est aussi profonde que l'obscurité dans laquelle il évolue.</p>`
     },
-    lums: {
-      name: "Lums",
-      role: "Kaito \"Korō\" Matsuda",
-      grade: "Shatei (舎弟)",
-      image: "lums.png",
-      fight: 65,
-      drive: 100,
-      driveFlames: true,
-      bdfText: "1000",
-      bdfPercent: 100,
-      story: `<p>Kaito Matsuda, connu sous le nom de <strong>Korō</strong> (cœur de glace), est un membre stoïque et déterminé. Son sang-froid légendaire fait de lui un pilote redoutable dans les situations de stress intense.</p>
-      <p>Il ne montre jamais ses émotions, gardant toujours un visage impassible même dans les moments les plus intenses. Cette froideur cache une passion brûlante pour la vitesse et le clan.</p>
-      <p>Korō est celui sur qui on peut compter quand tout semble perdu. Son cœur de glace bat pour le Muten avec une intensité que peu peuvent comprendre.</p>`
-    },
     patoche: {
       name: "Patoche",
       role: "Shinichiro \"SHIN\" Kanzaki",
@@ -707,7 +693,7 @@ window.addEventListener('load', ()=>{
       </div>`;
     }
 
-    // Stat Lums: BDF (affichage texte personnalisé)
+    // Stat BDF (affichage texte personnalisé)
     if(character.bdfText){
       const bdfWidth = Number.isFinite(character.bdfPercent) ? Math.max(0, Math.min(100, character.bdfPercent)) : 100;
       statsHtml += `
