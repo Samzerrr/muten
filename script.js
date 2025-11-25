@@ -424,10 +424,11 @@ window.addEventListener('load', ()=>{
       fight: 92,
       drive: 91,
       proxenetisme: 100,
-      story: `<p>Ken Genryusai, surnommé <strong>Draken</strong>, est une figure redoutée du Muten. Né et élevé dans un bordel de Yokohama, il a grandi parmi les cris, la fumée et les néons, apprenant très tôt que le pouvoir ne se mendie pas — il se prend. Là où d’autres rêvaient de fuir, lui s’est juré d’en devenir le maître. Son ambition : bâtir son propre empire de la nuit, devenir un proxénète respecté et intouchable.</p>
-      <p>Ancien champion de courses illégales, Draken a croisé la route de Tenshi sur les pentes d’Hakone. Leur duel est resté dans les mémoires — une défaite pour Draken, mais aussi une révélation. Depuis ce jour, il roule sous les couleurs du Muten, forgeant sa légende dans la vitesse, la sueur et le sang.</p>
-      <p>Charismatique, brutal et fidèle à son code, il est l’homme qu’on appelle quand il faut calmer les esprits ou régler les dettes.</p>
-      <p>Il pilote une ZR350 modifiée, bête d’acier au rugissement infernal, symbole de sa rage contenue.</p>
+      backgroundLink: "https://www.canva.com/design/DAG2es-FoVc/LesWo442POzq4_aU9lTBIQ/edit?utm_content=DAG2es-FoVc&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton",
+      story: `<p>Ken Genryusai, surnommé <strong>Draken</strong>, est une figure redoutée du Muten. Né et élevé dans un bordel de Yokohama, il a grandi parmi les cris, la fumée et les néons, apprenant très tôt que le pouvoir ne se mendie pas — il se prend. Là où d'autres rêvaient de fuir, lui s'est juré d'en devenir le maître. Son ambition : bâtir son propre empire de la nuit, devenir un proxénète respecté et intouchable.</p>
+      <p>Ancien champion de courses illégales, Draken a croisé la route de Tenshi sur les pentes d'Hakone. Leur duel est resté dans les mémoires — une défaite pour Draken, mais aussi une révélation. Depuis ce jour, il roule sous les couleurs du Muten, forgeant sa légende dans la vitesse, la sueur et le sang.</p>
+      <p>Charismatique, brutal et fidèle à son code, il est l'homme qu'on appelle quand il faut calmer les esprits ou régler les dettes.</p>
+      <p>Il pilote une ZR350 modifiée, bête d'acier au rugissement infernal, symbole de sa rage contenue.</p>
       <p>Sa devise : <em>« Celui qui possède la nuit possède le monde. »</em></p>`
     },
     replayy: {
@@ -449,6 +450,7 @@ window.addEventListener('load', ()=>{
       role: "Ryo \"Raijin\" Takahashi",
       grade: "Kyōryokuteki (強力的)",
       image: "tako.png",
+      backgroundLink: "https://www.canva.com/design/DAG5sKW77fE/M_UJ1u8muX-fhXyzVEaeSg/edit",
       fight: 80,
       drive: 91,
       bdgText: "100",
@@ -469,6 +471,7 @@ window.addEventListener('load', ()=>{
       mechanic: 94,
       mechanicFlames: true,
       mechanicLabel: "Réparation véhicule",
+      backgroundLink: "https://docs.google.com/presentation/d/1KJLQXRaHvl25_WmrECgvc7HkbjmHmf1on1182McovO4/edit?usp=sharing",
       story: `<p>Akira Fujimoto, surnommé <strong>Mad Dog</strong>, est le mécano du clan. Il a rejoint le Muten à 15 ans, après avoir sauvé la moto du Bōsu d'une mort certaine dans son garage de fortune.</p>
       <p>Il connaît chaque vis, chaque boulon, chaque secret mécanique. Il transforme des carcasses en bêtes de course, donne vie aux machines avec ses mains expertes.</p>
       <p>Mad Dog est celui qui fait confiance aux moteurs quand personne d'autre ne le peut. Il dit souvent : <em>"Un moteur, c'est comme un cœur. Il faut le comprendre avant de le réparer."</em></p>`
@@ -482,6 +485,7 @@ window.addEventListener('load', ()=>{
       drive: 85,
       begaiementText: "100",
       begaiementPercent: 100,
+      backgroundLink: "https://www.canva.com/design/DAG3zH-awvA/icZlvG5kZlaN0GTAAMWdhQ/edit?utm_content=DAG3zH-awvA&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton",
       story: `<p>Renji Nomura, connu sous le nom de <strong>Hayabusa</strong> (le faucon pèlerin), est un membre précieux du clan. Son nom vient de sa capacité à fendre l'air comme un oiseau de proie.</p>
       <p>Il excelle dans les courses de vitesse pure, où sa technique de pilotage atteint des niveaux presque surnaturels. Il est le faucon de la nuit, celui qui chasse dans l'obscurité.</p>
       <p>Hayabusa représente l'essence même du Muten : la liberté, la vitesse, l'honneur. Il vole pour le clan et revient toujours.</p>`
@@ -491,6 +495,7 @@ window.addEventListener('load', ()=>{
       role: "Tosoa \"Bozo\" Mura",
       grade: "Shatei (舎弟)",
       image: "bozo.png",
+      backgroundLink: "https://docs.google.com/presentation/d/1w15yLaq3IMWQFCrjHzUMn-b9qNQ3-WR1ddGtngDfXCM/edit?usp=sharing",
       fight: 10,
       drive: 10,
       crackhead: 100,
@@ -503,6 +508,7 @@ window.addEventListener('load', ()=>{
       role: "Akihiko \"Kurai\" Mori",
       grade: "Shatei (舎弟)",
       image: "gamxo.png",
+      backgroundLink: "https://www.canva.com/design/DAG5lR9lAYU/YbN-USe8iLYuq-sqvE9L8g/edit?utm_content=DAG5lR9lAYU&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton",
       fight: 74,
       drive: 98,
       pngText: "100",
@@ -516,6 +522,7 @@ window.addEventListener('load', ()=>{
       role: "Shinichiro \"SHIN\" Kanzaki",
       grade: "Shatei (舎弟)",
       image: "patoche.png",
+      backgroundLink: "https://docs.google.com/document/d/1eBcI2k4N1_J-X198yQg9Ex8rajtOnKWoHNdwbxPMDT8/edit?usp=share_link",
       fight: 66,
       drive: 80,
       belleBiteText: "100",
@@ -529,6 +536,7 @@ window.addEventListener('load', ()=>{
       role: "Takashi \"Taka\" Kanzaki",
       grade: "Shatei (舎弟)",
       image: "burger.png",
+      backgroundLink: "https://docs.google.com/document/d/1fbdrjUXnYDRVPp7XtC3UgvEmEAvxjvoLWCk1fLHX41s/edit?usp=sharing",
       fight: 58,
       drive: 72,
       intello: 100,
@@ -542,6 +550,7 @@ window.addEventListener('load', ()=>{
       role: "Takeshi \"Yoru\" Matsudo",
       grade: "Shatei (舎弟)",
       image: "envy.png",
+      backgroundLink: "https://docs.google.com/presentation/d/1UdIXt2QwJ522qj0dgcEVUm34xx-Ba2JyEVxQw_ATDCE/edit?usp=sharing",
       fight: 77,
       drive: 89,
       zgegText: "100",
@@ -575,7 +584,22 @@ window.addEventListener('load', ()=>{
       modalImage.style.backgroundImage = 'linear-gradient(135deg, rgba(255,255,255,.1), rgba(255,255,255,.05))';
     }
     
-    modalStory.innerHTML = character.story;
+    const modalStoryContent = qs('.modal-story-content', modal);
+    if(modalStoryContent){
+      modalStoryContent.innerHTML = character.story;
+    } else {
+      modalStory.innerHTML = character.story;
+    }
+    
+    // Mettre à jour le lien du bouton background
+    const backgroundBtn = qs('.modal-background-btn', modal);
+    if(backgroundBtn && character.backgroundLink){
+      backgroundBtn.href = character.backgroundLink;
+      backgroundBtn.style.display = 'inline-flex';
+    } else if(backgroundBtn && !character.backgroundLink){
+      backgroundBtn.style.display = 'none';
+    }
+    
     // Stats
     const fight = Number.isFinite(character.fight) ? Math.max(0, Math.min(100, character.fight)) : 50;
     const drive = Number.isFinite(character.drive) ? Math.max(0, Math.min(100, character.drive)) : 50;
@@ -753,6 +777,7 @@ window.addEventListener('load', ()=>{
   
   if(modalClose) modalClose.addEventListener('click', closeCharacterModal);
   if(modalOverlay) modalOverlay.addEventListener('click', closeCharacterModal);
+
 
   // Fermer avec la touche Escape
   document.addEventListener('keydown', (e) => {
