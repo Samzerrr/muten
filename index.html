@@ -114,13 +114,19 @@
     <section id="personnages" class="section characters" aria-labelledby="characters-title">
       <div class="section-header">
         <h2 id="characters-title" class="section-title" title="Clique sur un personnage pour ouvrir sa fiche">Personnages <span style="font-size:0.7em; opacity:0.65; font-weight:normal; margin-left:0.5rem;">(clique sur les personnages)</span></h2>
-        <div class="section-icons">
-          <!-- volant -->
-          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 1 0 10 10A10.011 10.011 0 0 0 12 2Zm0 2a8 8 0 0 1 7.75 6H13a1 1 0 0 0-1-1h0a1 1 0 0 0-1 1H4.25A8 8 0 0 1 12 4Zm0 16a8 8 0 0 1-7.06-4h6.06a1 1 0 0 0 1 1h0a1 1 0 0 0 1-1h6.06A8 8 0 0 1 12 20Zm5.66-6H6.34a6 6 0 0 1 11.32 0Z"/></svg>
-          <!-- clé -->
-          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M7 14a5 5 0 1 1 4.9-6.06L22 2v4l-3 2v2h-2l-2 2h-2l-1 1A5 5 0 0 1 7 14Zm-2-5a2 2 0 1 0 2-2 2 2 0 0 0-2 2Z"/></svg>
-          <!-- katana -->
-          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M21.71 4.29a1 1 0 0 0-1.42 0L12 12.59 8.71 9.29l-1.42 1.42L10.59 14 3.29 21.29a1 1 0 0 0 1.42 1.42L12 15.41l3.29 3.3 1.42-1.42L13.41 14l7.3-7.29a1 1 0 0 0 0-1.42Z"/></svg>
+        <div class="section-actions">
+          <div class="section-icons">
+            <!-- volant -->
+            <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 1 0 10 10A10.011 10.011 0 0 0 12 2Zm0 2a8 8 0 0 1 7.75 6H13a1 1 0 0 0-1-1h0a1 1 0 0 0-1 1H4.25A8 8 0 0 1 12 4Zm0 16a8 8 0 0 1-7.06-4h6.06a1 1 0 0 0 1 1h0a1 1 0 0 0 1-1h6.06A8 8 0 0 1 12 20Zm5.66-6H6.34a6 6 0 0 1 11.32 0Z"/></svg>
+            <!-- clé -->
+            <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M7 14a5 5 0 1 1 4.9-6.06L22 2v4l-3 2v2h-2l-2 2h-2l-1 1A5 5 0 0 1 7 14Zm-2-5a2 2 0 1 0 2-2 2 2 0 0 0-2 2Z"/></svg>
+            <!-- katana -->
+            <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M21.71 4.29a1 1 0 0 0-1.42 0L12 12.59 8.71 9.29l-1.42 1.42L10.59 14 3.29 21.29a1 1 0 0 0 1.42 1.42L12 15.41l3.29 3.3 1.42-1.42L13.41 14l7.3-7.29a1 1 0 0 0 0-1.42Z"/></svg>
+          </div>
+          <div class="view-toggle" role="group" aria-label="Choisir l'affichage">
+            <button class="view-toggle-btn active" data-view="carousel" type="button">Carrousel</button>
+            <button class="view-toggle-btn" data-view="grid" type="button">Grille</button>
+          </div>
         </div>
       </div>
 
@@ -243,6 +249,7 @@
         </div>
         <button class="carousel-btn next" aria-label="Suivant">⟩</button>
       </div>
+      <div class="characters-grid" aria-hidden="true"></div>
 
       <audio id="sfx-engine" preload="none" src="https://cdn.pixabay.com/download/audio/2021/08/04/audio_1f51c0d9e8.mp3?filename=engine-6105.mp3"></audio>
     </section>
@@ -286,19 +293,43 @@
       </h2>
       <div class="history-content">
         <div class="history-block">
-          <p>Le Muten Club est né dans les rues de Yokohama en 2020, fondé par une bande de jeunes en colère et passionnés de moteurs. Ils passaient leurs nuits à bricoler des motos et des voitures volées ou sauvées de la casse, à transformer la vitesse en langage, la fumée en drapeau et la route en temple.</p>
-          
-          <p>Au centre de ce chaos régnait <strong>Tenshi Musashi</strong>, un gamin calme au regard brûlant, fils d'un mécanicien mort dans une course illégale. Il n'a jamais cherché à être chef, mais tout le monde l'a suivi. On l'a appelé <strong>Bōsu</strong>, le patron.</p>
-          
-          <p>Sous sa direction, le Muten Club — <strong>無天</strong>, "sans ciel" — est devenu plus qu'un gang : une fraternité de la nuit. Leur emblème, une tête de tengu rouge entourée de flammes, symbolise leur orgueil et leur mépris du danger. Leur devise, <strong>「走るは自由、闘うは誇り。」</strong> — Courir, c'est la liberté. Se battre, c'est l'honneur.</p>
-          
-          <p>Le Muten règne sur les routes de Tokyo, Hakone et des montagnes d'Ibaraki, provoquant la police, défiant les yakuzas et écrasant les crews rivaux comme les Kurokaze, les Red Comet ou les Tora Gumi. Sous la lune, ils rugissent, libres et indomptables.</p>
-          
-          <p><strong>Tenshi Musashi</strong> est leur âme. On raconte qu'il pilote sa Hayabusa rouge les yeux fermés, guidé seulement par le son du moteur, comme s'il parlait à la route. Pour lui, la vitesse n'est pas une fuite, c'est une vérité : <em>"La route ne ment jamais. Elle t'offre la vérité que le monde te refuse."</em></p>
-          
-          <p>Une nuit d'hiver, lors d'une course-poursuite mythique sur le périphérique de Tokyo, le Bōsu aurait sauté un pont inachevé sous la pluie, atterrissant de l'autre côté indemne. Depuis, la rumeur dit qu'il a vendu son âme à la route.</p>
-          
-          <p>Aujourd'hui encore, même si le Muten Club s'est dispersé, leur légende rôde dans les tunnels et les docks abandonnés. Les néons s'allument, les moteurs hurlent, et les nouveaux riders reprennent leur cri : <strong>"MUTEN FOREVER — THE SKY IS OURS."</strong></p>
+          <div class="history-intro">
+            <p>Le Muten Club n’est pas une simple bande de pilotes : c’est une église païenne dédiée à la vitesse, née sous les néons de Yokohama et élevée par le vacarme des moteurs. Voici leur histoire, transmise comme on passe une clé à cliquet : avec respect, feu sacré et cicatrices encore chaudes.</p>
+          </div>
+          <div class="history-chapters">
+            <article class="history-chapter">
+              <header class="chapter-header">
+                <span class="chapter-number">Chapitre 01</span>
+                <h3>Docks & étincelles</h3>
+              </header>
+              <p>En 2020, les docks de Yokohama servent de nurserie aux rebuts du Japon. Des carcasses de Silvia, des moteurs grelottants et des mômes qui refusent la résignation. <strong>Tenshi Musashi</strong>, fils d’un mécano mort sur l’asphalte, rallie les orphelins de la nuit. Dans un hangar volé, ils démontent, reforgent et inventent leur propre code. On les surnomme <em>les enfants sans ciel</em> — 無天.</p>
+              <p>Chaque bolide qui ressort de l’atelier porte leur sceau : du ruban adhésif éclaireur, des néons bricolés, des prières gravées dans l’alu. Les premiers runs se font sans public, juste pour entendre la ville respirer. C’est là qu’ils jurent : « Courir, c’est la liberté. Se battre, c’est l’honneur. »</p>
+            </article>
+            <article class="history-chapter">
+              <header class="chapter-header">
+                <span class="chapter-number">Chapitre 02</span>
+                <h3>Le règne des routes</h3>
+              </header>
+              <p>Très vite, le Muten dévore Tokyo, Hakone et les routes brumeuses d’Ibaraki. Ils défient les crews riches, narguent les yakuzas, humilient les flics qui n’arrivent jamais à suivre leurs trajectoires. <strong>Draken, Kaze, Raijin</strong> : des noms qui claquent comme des détonations.</p>
+              <p>Leur emblème — un tengu rouge entouré de flammes — devient un avertissement placardé dans les runs clandestins. On dit que lorsque leurs motos sortent, la route s’incline pour les laisser passer. Des crews entiers (Kurokaze, Red Comet, Tora Gumi) disparaissent après avoir été « baptisés » par le Muten.</p>
+            </article>
+            <article class="history-chapter">
+              <header class="chapter-header">
+                <span class="chapter-number">Chapitre 03</span>
+                <h3>La nuit du pont noir</h3>
+              </header>
+              <p>La légende s’écrit lors d’une pluie glacée sur le périphérique de Tokyo. Une course-poursuite contre trois unités spéciales, hélico au-dessus. Tenshi coupe les phares, pilote à l’oreille. Un pont inachevé s’annonce comme un mur. Il décide de ne pas freiner.</p>
+              <p>La Hayabusa rouge vole, atterrit sur l’autre rive, repart sans crisser. Les sirènes s’étranglent. Depuis, on murmure qu’il ne touche plus le sol, qu’il est guidé par la route elle-même. Certains jurent avoir vu des traînées de lumière dans son sillage, comme si le temps se tordait.</p>
+            </article>
+            <article class="history-chapter">
+              <header class="chapter-header">
+                <span class="chapter-number">Chapitre 04</span>
+                <h3>Exil & renaissance</h3>
+              </header>
+              <p>Quand les docks sont rasés, le Muten refuse de mourir. Les survivants embarquent pour Los Santos, emportant moteurs, tatouages et souvenirs brûlants. Little Tokyo devient leur sanctuaire. Ils transforment ateliers abandonnés en temples JDM, enseignent aux nouvelles recrues l’art de danser entre gyrophares.</p>
+              <p>Aujourd’hui, même dispersés, ils se reconnaissent à la façon d’enfiler un gant, de démarrer un turbo, de saluer un passant. Leur cri résonne encore dans les tunnels : <strong>MUTEN FOREVER — THE SKY IS OURS.</strong> La légende continue, chapitre après chapitre, tant que quelqu’un tient un volant avec les mains tremblantes d’impatience.</p>
+            </article>
+          </div>
         </div>
       </div>
     </section>
@@ -602,17 +633,83 @@
       </h2>
       <div class="classement-content">
         <ol class="classement-list" aria-label="Top 11 des pilotes">
-          <li><span class="rank">1</span><span class="driver">KURO Genryusai</span></li>
-          <li><span class="rank">2</span><span class="driver">Akihiko Mori</span></li>
-          <li><span class="rank">3</span><span class="driver">Ryo Takahashi</span></li>
-          <li><span class="rank">4</span><span class="driver">Ken Genryusai</span></li>
-          <li><span class="rank">5</span><span class="driver">Takeshi Matsudo</span></li>
-          <li><span class="rank">6</span><span class="driver">Renji Nomura</span></li>
-          <li><span class="rank">7</span><span class="driver">Tenshi Musashi</span></li>
-          <li><span class="rank">8</span><span class="driver">Shinichiro Kanzaki</span></li>
-          <li><span class="rank">9</span><span class="driver">Akira Fujimoto</span></li>
-          <li><span class="rank">10</span><span class="driver">Takashi Kanzaki</span></li>
-          <li><span class="rank">11</span><span class="driver">Tosoa Mura</span></li>
+          <li>
+            <span class="rank">1</span>
+            <span class="driver-info">
+              <span class="driver-avatar" style="background-image:url('replay.png');"></span>
+              <span class="driver-name">KURO Genryusai</span>
+            </span>
+          </li>
+          <li>
+            <span class="rank">2</span>
+            <span class="driver-info">
+              <span class="driver-avatar" style="background-image:url('gamxo.png');"></span>
+              <span class="driver-name">Akihiko Mori</span>
+            </span>
+          </li>
+          <li>
+            <span class="rank">3</span>
+            <span class="driver-info">
+              <span class="driver-avatar" style="background-image:url('tako.png');"></span>
+              <span class="driver-name">Ryo Takahashi</span>
+            </span>
+          </li>
+          <li>
+            <span class="rank">4</span>
+            <span class="driver-info">
+              <span class="driver-avatar" style="background-image:url('sambo.png');"></span>
+              <span class="driver-name">Ken Genryusai</span>
+            </span>
+          </li>
+          <li>
+            <span class="rank">5</span>
+            <span class="driver-info">
+              <span class="driver-avatar" style="background-image:url('envy.png');"></span>
+              <span class="driver-name">Takeshi Matsudo</span>
+            </span>
+          </li>
+          <li>
+            <span class="rank">6</span>
+            <span class="driver-info">
+              <span class="driver-avatar" style="background-image:url('angel.png');"></span>
+              <span class="driver-name">Renji Nomura</span>
+            </span>
+          </li>
+          <li>
+            <span class="rank">7</span>
+            <span class="driver-info">
+              <span class="driver-avatar" style="background-image:url('pulsar.png');"></span>
+              <span class="driver-name">Tenshi Musashi</span>
+            </span>
+          </li>
+          <li>
+            <span class="rank">8</span>
+            <span class="driver-info">
+              <span class="driver-avatar" style="background-image:url('patoche.png');"></span>
+              <span class="driver-name">Shinichiro Kanzaki</span>
+            </span>
+          </li>
+          <li>
+            <span class="rank">9</span>
+            <span class="driver-info">
+              <span class="driver-avatar" style="background-image:url('alpha.png');"></span>
+              <span class="driver-name">Akira Fujimoto</span>
+            </span>
+          </li>
+          <li>
+            <span class="rank">10</span>
+            <span class="driver-info">
+              <span class="driver-avatar" style="background-image:url('burger.png');"></span>
+              <span class="driver-name">Takashi Kanzaki</span>
+            </span>
+          </li>
+          <li>
+            <span class="rank">11</span>
+            <span class="driver-info">
+              <span class="driver-avatar" style="background-image:url('bozo.png');"></span>
+              <span class="driver-name">Tosoa Mura</span>
+            </span>
+          </li>
         </ol>
       </div>
     </section>

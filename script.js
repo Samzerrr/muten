@@ -251,13 +251,16 @@ window.addEventListener('load', ()=>{
 
 /* Carrousel Personnages */
 window.addEventListener('load', ()=>{
+  const charactersSection = qs('.characters');
   const viewport = qs('.carousel-viewport');
   const track = qs('.carousel-track');
-  const cards = qsa('.card', track);
+  const cards = qsa('.carousel-track > .card', track);
   const prev = qs('.carousel-btn.prev');
   const next = qs('.carousel-btn.next');
   const sfx = qs('#sfx-engine');
   const audioToggle = qs('.audio-toggle');
+  const gridContainer = qs('.characters-grid');
+  const viewToggleBtns = qsa('.view-toggle-btn');
 
   if(!viewport || !track || cards.length === 0) return;
 
@@ -279,6 +282,29 @@ window.addEventListener('load', ()=>{
   const allCards = qsa('.card[data-character]', track);
   const allCardsEls = qsa('.card', track); // cache pour l'animation
 
+  function attachCardHandlers(nodeList){
+    nodeList.forEach(card => {
+      card.addEventListener('click', (e) => {
+        if(e.target.closest('.carousel-btn')) return;
+        const characterId = card.getAttribute('data-character');
+        if(characterId) openCharacterModal(characterId);
+      });
+    });
+  }
+  attachCardHandlers(allCards);
+
+  if(gridContainer){
+    const fragment = document.createDocumentFragment();
+    cards.forEach(card=>{
+      const clone = card.cloneNode(true);
+      fragment.appendChild(clone);
+    });
+    gridContainer.appendChild(fragment);
+    attachCardHandlers(qsa('.characters-grid .card'));
+    gridContainer.setAttribute('aria-hidden','true');
+  }
+  viewport?.setAttribute('aria-hidden','false');
+
   // Dimensions
   const gap = 16; // CSS gap
   function cardWidth(){ 
@@ -290,6 +316,7 @@ window.addEventListener('load', ()=>{
   const originalCardsWidth = cardWidth() * cards.length;
   let x = -originalCardsWidth; // Commencer après les clones du début (au début des originaux)
   let auto = true;
+  let gridMode = false;
 
   function layout(){
     // set perspective pour effet 3D léger
@@ -322,6 +349,10 @@ window.addEventListener('load', ()=>{
   function tick(){
     if(!viewport || !track) return;
     if(!isInView){ return; }
+    if(gridMode){
+      track.style.transform = '';
+      return;
+    }
     
     if(auto){ x -= 0.35; }
     
@@ -360,8 +391,9 @@ window.addEventListener('load', ()=>{
 
   // Contrôles
   function nudge(dir){
+    if(gridMode) return;
     auto = false;
-    const dist = Math.round(viewport.clientWidth / cardWidth()) * cardWidth();
+    const dist = cardWidth();
     const targetX = x + (dir * -dist);
     const startX = x;
     const startTime = performance.now();
@@ -394,6 +426,7 @@ window.addEventListener('load', ()=>{
 
   // Molette horizontale
   viewport.addEventListener('wheel', (e)=>{
+    if(gridMode) return;
     e.preventDefault();
     x -= e.deltaY * 0.6; // défilement plus doux
     auto = false;
@@ -762,15 +795,37 @@ window.addEventListener('load', ()=>{
     document.body.style.overflow = '';
   }
 
-  // Ajouter les event listeners à toutes les cartes (originales + clones)
-  allCards.forEach(card => {
-    card.addEventListener('click', (e) => {
-      // Éviter d'ouvrir le modal si on clique sur les boutons du carrousel
-      if(e.target.closest('.carousel-btn')) return;
-      const characterId = card.getAttribute('data-character');
-      if(characterId) openCharacterModal(characterId);
+  function setViewMode(mode){
+    if(!charactersSection) return;
+    const isGrid = mode === 'grid';
+    gridMode = isGrid;
+    charactersSection.classList.toggle('grid-mode', isGrid);
+    viewToggleBtns.forEach(btn=>{
+      btn.classList.toggle('active', btn.dataset.view === mode);
+    });
+    if(isGrid){
+      auto = false;
+      track.style.transform = '';
+      viewport?.setAttribute('aria-hidden','true');
+      gridContainer?.setAttribute('aria-hidden','false');
+    } else {
+      auto = true;
+      viewport?.setAttribute('aria-hidden','false');
+      gridContainer?.setAttribute('aria-hidden','true');
+      requestAnimationFrame(tick);
+    }
+  }
+
+  viewToggleBtns.forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const mode = btn.dataset.view;
+      if(!mode) return;
+      if((mode === 'grid' && gridMode) || (mode === 'carousel' && !gridMode)) return;
+      setViewMode(mode);
     });
   });
+
+  setViewMode('carousel');
 
   const modalClose = qs('.modal-close');
   const modalOverlay = qs('.modal-overlay');
