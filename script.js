@@ -1,6 +1,7 @@
 /* Créé par Sambo */
 /* Utilitaires */
-const DISABLE_MOTION = true; // désactiver toutes les animations pour fluidité
+const DISABLE_MOTION = true; // désactiver les grosses animations GSAP pour fluidité
+const ENABLE_CARD_3D = false; // désactiver l'effet 3D lourd sur les cartes du carrousel
 const qs = (s, el=document) => el.querySelector(s);
 const qsa = (s, el=document) => [...el.querySelectorAll(s)];
 
@@ -307,22 +308,26 @@ window.addEventListener('load', ()=>{
 
   // Dimensions
   const gap = 16; // CSS gap
-  function cardWidth(){ 
+  let currentCardWidth = 300;
+  function recomputeCardWidth(){
     const w = cards[0]?.getBoundingClientRect().width;
-    return w ? w + gap : 300;
+    currentCardWidth = w ? w + gap : 300;
   }
+  recomputeCardWidth();
 
   // Position courante
-  const originalCardsWidth = cardWidth() * cards.length;
+  const originalCardsWidth = currentCardWidth * cards.length;
   let x = -originalCardsWidth; // Commencer après les clones du début (au début des originaux)
   let auto = true;
   let gridMode = false;
+  let carouselPausedByModal = false;
 
   function layout(){
     // set perspective pour effet 3D léger
     if(viewport) viewport.style.perspective = '1000px';
     // Recalculer la position initiale après resize
-    const newOriginalWidth = cardWidth() * cards.length;
+    recomputeCardWidth();
+    const newOriginalWidth = currentCardWidth * cards.length;
     if(Math.abs(x) > newOriginalWidth * 2){
       x = -newOriginalWidth;
     }
@@ -351,12 +356,15 @@ window.addEventListener('load', ()=>{
     if(!isInView){ return; }
     if(gridMode){
       track.style.transform = '';
+      if(!carouselPausedByModal){
+        requestAnimationFrame(tick);
+      }
       return;
     }
     
-    if(auto){ x -= 0.35; }
+    if(auto){ x -= 0.25; } // vitesse auto légèrement réduite pour plus de fluidité
     
-    const cardW = cardWidth();
+    const cardW = currentCardWidth;
     const originalWidth = cardW * cards.length;
     
     // Boucle infinie fluide
@@ -374,18 +382,22 @@ window.addEventListener('load', ()=>{
     // appliquer transform
     track.style.transform = `translate3d(${x}px,0,0)`;
 
-    // effets 3D sur les cartes visibles
-    const vw = viewport.getBoundingClientRect();
-    allCardsEls.forEach((card)=>{
-      const r = card.getBoundingClientRect();
-      const center = r.left + r.width/2;
-      const delta = (center - (vw.left + vw.width/2)) / vw.width; // -0.5 à 0.5 env
-      const rotateY = -delta * 18; // max 18°
-      const scale = 1 - Math.min(Math.abs(delta)*0.15, 0.15);
-      card.style.transform = `translateZ(0) rotateY(${rotateY}deg) scale(${scale})`;
-    });
+    // effets 3D sur les cartes visibles (optionnels car coûteux)
+    if(ENABLE_CARD_3D){
+      const vw = viewport.getBoundingClientRect();
+      allCardsEls.forEach((card)=>{
+        const r = card.getBoundingClientRect();
+        const center = r.left + r.width/2;
+        const delta = (center - (vw.left + vw.width/2)) / vw.width; // -0.5 à 0.5 env
+        const rotateY = -delta * 18; // max 18°
+        const scale = 1 - Math.min(Math.abs(delta)*0.15, 0.15);
+        card.style.transform = `translateZ(0) rotateY(${rotateY}deg) scale(${scale})`;
+      });
+    }
 
-    requestAnimationFrame(tick);
+    if(!carouselPausedByModal){
+      requestAnimationFrame(tick);
+    }
   }
   requestAnimationFrame(tick);
 
@@ -393,7 +405,7 @@ window.addEventListener('load', ()=>{
   function nudge(dir){
     if(gridMode) return;
     auto = false;
-    const dist = cardWidth();
+    const dist = currentCardWidth;
     const targetX = x + (dir * -dist);
     const startX = x;
     const startTime = performance.now();
@@ -441,6 +453,7 @@ window.addEventListener('load', ()=>{
       role: "Tenshi \"Bosu\" Musashi",
       grade: "Kaichō (会長)",
       image: "pulsar.png",
+      backgroundLink: "https://docs.google.com/document/d/16AqsCfc3i801LIqd61iqpWQq21HGGjmp00UDvs6KLsM/edit?usp=sharing",
       fight: 78,
       drive: 75,
       bosu: 100,
@@ -469,6 +482,7 @@ window.addEventListener('load', ()=>{
       role: "KURO \"Kaze\" Genryusai",
       grade: "Kyōryokuteki (強力的)",
       image: "replay.png",
+      backgroundLink: "https://www.canva.com/design/DAG5uDWw3xs/FJVw_anh1EjPAUf8Hoynag/view?utm_content=DAG5uDWw3xs&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=hff204a8679",
       fight: 85,
       drive: 100,
       driveFlames: true,
@@ -785,6 +799,10 @@ window.addEventListener('load', ()=>{
     modal.setAttribute('data-character', characterId);
     modal.classList.add('active');
     document.body.style.overflow = 'hidden';
+
+    // Mettre en pause le carrousel pendant l'ouverture du modal
+    carouselPausedByModal = true;
+    auto = false;
   }
 
   // Fonction pour fermer le modal
@@ -793,6 +811,11 @@ window.addEventListener('load', ()=>{
     modal.classList.remove('active');
     modal.removeAttribute('data-character');
     document.body.style.overflow = '';
+
+    // Relancer le carrousel une fois le modal fermé
+    carouselPausedByModal = false;
+    auto = true;
+    requestAnimationFrame(tick);
   }
 
   function setViewMode(mode){
