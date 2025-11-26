@@ -591,21 +591,6 @@ window.addEventListener('load', ()=>{
       <p>Sa loyauté est inébranlable, sa détermination sans faille. Il est celui sur qui on peut toujours compter, celui qui ne laisse jamais tomber ses frères.</p>
       <p>Taka est le cœur stable du clan, celui qui maintient l'unité et la fraternité. Il conduit avec honneur et protège ceux qu'il aime avec une ferveur inégalée.</p>`
     }
-    ,
-    imenvyy: {
-      name: "Envy",
-      role: "Takeshi \"Yoru\" Matsudo",
-      grade: "Shatei (舎弟)",
-      image: "envy.png",
-      backgroundLink: "https://docs.google.com/presentation/d/1UdIXt2QwJ522qj0dgcEVUm34xx-Ba2JyEVxQw_ATDCE/edit?usp=sharing",
-      fight: 77,
-      drive: 89,
-      zgegText: "100",
-      zgegPercent: 100,
-      story: `<p>Takeshi Matsudo, surnommé <strong>Yoru</strong> (la nuit), avance dans l'ombre des docks et des ruelles de Little Tokyo. Discret, patient, il observe avant de frapper. Sa présence est un murmure, son passage un courant d'air froid.</p>
-      <p>Yoru conduit comme il respire : propre, précis, sans un bruit de trop. Quand les gyrophares s'allument, il s'efface dans le noir, laissant derrière lui seulement l'odeur de l'asphalte chaud.</p>
-      <p>Au Muten, il est la lame silencieuse : il ne cherche pas la lumière, seulement l'efficacité. Sa loyauté est inébranlable, son regard fixé sur la route, toujours.</p>`
-    }
   };
 
   // Fonction pour ouvrir le modal
@@ -734,7 +719,7 @@ window.addEventListener('load', ()=>{
       </div>`;
     }
 
-    // Stat Envy: Zgeg (affichage texte personnalisé)
+    // Stat Zgeg (affichage texte personnalisé)
     if(character.zgegText){
       const zgegWidth = Number.isFinite(character.zgegPercent) ? Math.max(0, Math.min(100, character.zgegPercent)) : 100;
       statsHtml += `
